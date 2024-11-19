@@ -17,7 +17,6 @@ db_pool = pool.SimpleConnectionPool(
     port=Config.DB_PORT,
     dbname=Config.DB_NAME
 )
-
 def fetch_data(query, params=None):
     """從資料庫中查詢資料"""
     conn = db_pool.getconn()
@@ -26,7 +25,8 @@ def fetch_data(query, params=None):
             cursor.execute(query, params)
             return cursor.fetchall()
     except Exception as e:
-        print(f"查詢時發生錯誤: {e}")
+        # 將錯誤重新拋出以便調用方處理
+        raise Exception(f"查詢時發生錯誤: {e}")
     finally:
         db_pool.putconn(conn)
 
@@ -38,7 +38,8 @@ def modify_data(query, params):
             cursor.execute(query, params)
             conn.commit()
     except Exception as e:
-        print(f"執行資料庫操作時發生錯誤: {e}")
         conn.rollback()
+        # 將錯誤重新拋出以便調用方處理
+        raise Exception(f"執行資料庫操作時發生錯誤: {e}")
     finally:
         db_pool.putconn(conn)

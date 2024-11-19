@@ -8,8 +8,9 @@ class AppUserModel:
 
     @staticmethod
     def is_account_existing(account):
-        query = "SELECT ID FROM AppUser WHERE ID = %s"
-        return fetch_data(query, (account,))
+        query = "SELECT 1 FROM AppUser WHERE ID = %s"
+        result = fetch_data(query, (account,))
+        return bool(result)  # 如果有結果，表示帳號存在
 
     @staticmethod
     def create_user(data):
@@ -20,3 +21,13 @@ class AppUserModel:
         params = (data['ID'], data['pwd'], data['birth'], data['Sex'], 
                   data['name'], data['cname'], data['use'], data['number'])
         modify_data(query, params)
+
+    @staticmethod
+    def add_user_phones(user_id, phones):
+        query = '''
+            INSERT INTO UserPhone (id, phone, phone_type)
+            VALUES (%s, %s, %s)
+        '''
+        for phone in phones:
+            params = (user_id, phone['phone'], phone['phone_type'])
+            modify_data(query, params)
