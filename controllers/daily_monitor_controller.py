@@ -4,9 +4,9 @@ class DailyMonitorController:
     @staticmethod
     def create_record(data):
         # 檢查必填欄位
-        required_fields = ['m_date', 'ID']
+        required_fields = ['m_date', 'id']
         if not all(field in data and data[field] for field in required_fields):
-            return {"error": "m_date 和 ID 為必填欄位"}, 400
+            return {"error": "m_date 和 id 為必填欄位"}, 400
 
         # 建立新紀錄
         try:

@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restx import Api
+from flask_cors import CORS  # 新增這行
 from config import Config
 from routes.user_routes import user_api
 from routes.daily_monitor_routes import daily_monitor_api
@@ -11,6 +12,15 @@ from routes.coach_routes import coach_api
 # 初始化 Flask 應用
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# 啟用 CORS，允許來自指定的域名
+CORS(
+    app, 
+    resources={r"/*": {"origins": ["https://rexwei1016.github.io", "http://localhost:3000", "http://127.0.0.1:3000"]}},
+    supports_credentials=True,  # 確保支持跨域憑證
+    methods=["GET", "POST", "OPTIONS", "PUT", "DELETE"],  # 確保允許所有相關的 HTTP 方法
+)
+
 
 # 創建全局的主 API
 main_api = Api(
