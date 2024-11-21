@@ -31,3 +31,9 @@ class AppUserModel:
         for phone in phones:
             params = (user_id, phone['phone'], phone['phone_type'])
             modify_data(query, params)
+
+
+    @staticmethod
+    def get_all_users():
+        query = "SELECT ID, name FROM AppUser"
+        return fetch_data(query)

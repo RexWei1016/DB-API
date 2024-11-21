@@ -40,3 +40,13 @@ class UserController:
         if data and data[0][1] == password:
             return {"message": "Login successful"}, 200
         return {"error": "*密碼錯誤，請再試一次"}, 401
+
+
+
+    @staticmethod
+    def get_all_users():
+        try:
+            users = AppUserModel.get_all_users()
+            return {"users": [{"ID": user[0], "name": user[1]} for user in users]}, 200
+        except Exception as e:
+            return {"error": str(e)}, 500

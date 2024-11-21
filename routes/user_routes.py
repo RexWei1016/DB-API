@@ -58,3 +58,10 @@ class Login(Resource):
         password = data.get('password')
         response, status = UserController.login_user(account, password)
         return response, status
+
+
+@user_api.route('/users')
+class Users(Resource):
+    def get(self):
+        response, status = UserController.get_all_users()
+        return response, status
