@@ -8,6 +8,7 @@ from routes.exercise_record_routes import exercise_record_api
 from routes.food_record_routes import food_record_api
 from routes.consultation_routes import consultation_api
 from routes.coach_routes import coach_api
+from routes.food_routes import food_api
 
 # 初始化 Flask 應用
 app = Flask(__name__)
@@ -38,6 +39,7 @@ main_api.add_namespace(exercise_record_api, path='/exercise_record')
 main_api.add_namespace(food_record_api, path='/food_record')
 main_api.add_namespace(consultation_api, path='/consultation')
 main_api.add_namespace(coach_api, path='/coach')
+main_api.add_namespace(food_api, path='/food')
 
 # 啟動應用
 if __name__ == '__main__':

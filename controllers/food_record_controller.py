@@ -4,7 +4,7 @@ class FoodRecordController:
     @staticmethod
     def create_record(data):
         # 檢查必填欄位
-        required_fields = ['eat_date', 'ID', 'fID']
+        required_fields = ['eat_date', 'id', 'fid']
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
         if missing_fields:
             return {"error": f"缺少必要欄位: {', '.join(missing_fields)}"}, 400
