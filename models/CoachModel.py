@@ -14,3 +14,8 @@ class CoachModel:
         '''
         params = (data['cID'], data['pwd'], data['name'], data['onboarding'], data['exp'])
         modify_data(query, params)
+
+    @staticmethod
+    def get_all_coaches():
+        query = "SELECT cID, pwd, name, onboarding, exp FROM Coach"
+        return fetch_data(query)

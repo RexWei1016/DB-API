@@ -1,5 +1,5 @@
 from models.CoachModel import CoachModel
-
+from datetime import date
 class CoachController:
     @staticmethod
     def register_coach(cID, password, name, onboarding, exp):
@@ -32,3 +32,26 @@ class CoachController:
         if data and data[0][1] == password:
             return {"message": f"登入成功，歡迎 {data[0][2]}"}, 200
         return {"error": "*密碼錯誤，請再試一次"}, 401
+
+
+    @staticmethod
+    def get_all_coaches():
+        try:
+            # 查詢所有教練資料
+            coaches = CoachModel.get_all_coaches()
+            if not coaches:
+                return {"message": "目前沒有教練資料"}, 200
+            
+            # 整理資料格式
+            coach_list = []
+            for coach in coaches:
+                coach_list.append({
+                    'cID': coach[0],
+                    'name': coach[2],
+                    'onboarding': coach[3].isoformat() if isinstance(coach[3], date) else coach[3],
+                    'exp': coach[4]
+                })
+
+            return {"coaches": coach_list}, 200
+        except Exception as e:
+            return {"error": str(e)}, 500

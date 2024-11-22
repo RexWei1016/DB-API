@@ -27,6 +27,7 @@ class Consultation(Resource):
 class ConsultationByUser(Resource):
     def get(self, user_id):
         response, status = ConsultationController.get_records(user_id)
+        print(response)
         return response, status
 
 @consultation_api.route('/<int:cID>/<string:user_id>/<string:con_time>')

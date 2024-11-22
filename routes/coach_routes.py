@@ -5,7 +5,7 @@ from controllers.consultation_controller import ConsultationController
 from utils.validation import validate_json
 
 coach_blueprint = Blueprint('coach', __name__)
-coach_api = Namespace('教練', description='教練註冊與登入 APIs')
+coach_api = Namespace('教練', description='教練註冊、登入與查詢 APIs')
 
 # 定義教練數據模型
 register_model = coach_api.model('Register', {
@@ -35,4 +35,11 @@ class Login(Resource):
     def post(self):
         data = validate_json()
         response, status = CoachController.login_coach(data['cID'], data['password'])
+        return response, status
+
+@coach_api.route('/all')
+class GetAllCoaches(Resource):
+    def get(self):
+        # 調用 CoachController.get_all_coaches() 方法來獲取所有教練
+        response, status = CoachController.get_all_coaches()
         return response, status

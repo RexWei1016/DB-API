@@ -27,7 +27,18 @@ class ConsultationController:
             records = ConsultationModel.get_records_by_user(user_id)
             if not records:
                 return {"message": "No records found"}, 404
-            return {"data": records}, 200
+
+            # 將 datetime 物件轉換為字串格式
+            formatted_records = []
+            for record in records:
+                formatted_record = {
+                    "cID": record[0],
+                    "con_time": record[1].strftime('%Y-%m-%d %H:%M:%S'),  # 將 datetime 轉為字串
+                    "content": record[2]
+                }
+                formatted_records.append(formatted_record)
+
+            return {"data": formatted_records}, 200
         except Exception as e:
             return {"error": f"Failed to fetch records: {str(e)}"}, 500
 
