@@ -4,7 +4,7 @@ class FoodRecordModel:
     @staticmethod
     def create_record(data):
         query = '''
-            INSERT INTO FoodRecord (eat_date, id, fid, food_num, calories)
+            INSERT INTO foodrecord (eat_date, id, fid, food_num, calories)
             VALUES (%s, %s, %s, %s, %s)
         '''
         params = (
@@ -20,16 +20,16 @@ class FoodRecordModel:
     def get_records_by_user(user_id):
         query = '''
             SELECT eat_date, fid, food_num, calories 
-            FROM FoodRecord 
+            FROM foodrecord 
             WHERE id = %s 
             ORDER BY eat_date DESC
         '''
         return fetch_data(query, (user_id,))
 
     @staticmethod
-    def delete_record(user_id, eat_date, fID):
+    def delete_record(user_id, eat_date, fid):
         query = '''
-            DELETE FROM FoodRecord 
-            WHERE id = %s AND eat_date = %s AND id = %s
+            DELETE FROM foodrecord 
+            WHERE id = %s AND eat_date = %s AND fid = %s
         '''
-        modify_data(query, (user_id, eat_date, fID))
+        modify_data(query, (user_id, eat_date, fid))

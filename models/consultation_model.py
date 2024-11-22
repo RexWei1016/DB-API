@@ -32,3 +32,25 @@ class ConsultationModel:
             WHERE cID = %s AND ID = %s AND con_time = %s
         '''
         modify_data(query, (cID, user_id, con_time))
+    
+    @staticmethod
+    def get_records_by_coach(cID):
+        # 依教練ID取得所有紀錄
+        query = '''
+            SELECT ID, con_time, content
+            FROM Consultation
+            WHERE cID = %s
+            ORDER BY con_time DESC
+        '''
+        return fetch_data(query, (cID,))
+
+    @staticmethod
+    def update_record_content(cID, user_id, con_time, new_content):
+        # 更新指定諮詢紀錄的內容
+        query = '''
+            UPDATE Consultation
+            SET content = %s
+            WHERE cID = %s AND ID = %s AND con_time = %s
+        '''
+        params = (new_content, cID, user_id, con_time)
+        modify_data(query, params)
